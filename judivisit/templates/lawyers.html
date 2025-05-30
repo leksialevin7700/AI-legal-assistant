@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Listings - LegalPro Connect</title>
+    <style>
+        :root {
+            --primary-color: #1a3c6f;
+            --secondary-color: #2c5cb0;
+            --background-color: #f4f7f9;
+            --text-color: #333;
+            --white: #ffffff;
+            --book-btn-color: #3564a5;
+            --meet-btn-color: #1b467a;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+            border-radius: 50%;
+        }
+        
+        .logo h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--white);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            opacity: 0.9;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 5%;
+        }
+        
+        .lawyer-listings h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+        }
+        
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        form input {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        
+        form button {
+            padding: 10px 15px;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        
+        form button:hover {
+            background-color: var(--primary-color);
+            opacity: 0.9;
+        }
+        
+        .lawyer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .lawyer-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .lawyer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .lawyer-profile {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid var(--secondary-color);
+        }
+        
+        .profile-info {
+            flex: 1;
+        }
+        
+        .profile-info h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        
+        .lawyer-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 5px;
+        }
+        
+        .lawyer-info {
+            margin-bottom: auto;
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav {
+                margin-top: 1rem;
+            }
+            
+            .lawyer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            min-width: 300px;
+            border-radius: 8px;
+        }
+        
+        .close {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+        }
+        
+        .modal-content h3 {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .modal-content label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .modal-content input[type="datetime-local"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .modal-content button {
+            background-color: var(--book-btn-color);
+            color: var(--white);
+            padding: 14px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+        
+        .book-btn, .meet-btn {
+            color: var(--white);
+            padding: 16px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            display: block;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        .book-btn {
+            background-color: var(--book-btn-color);
+        }
+        
+        .meet-btn {
+            background-color: var(--meet-btn-color);
+            margin-top: 19px;
+        }
+        
+        .meet-btn {
+            background-color: var(--meet-btn-color);
+            margin-top: 19px;
+            padding: 8px 16px;
+            font-size: 14px;
+            width: auto;
+            height: auto;
+        }
+        
+        .book-btn:hover {
+            background-color: #2a5390;
+        }
+        
+        .meet-btn:hover {
+            background-color: #153c6b;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>LegalPro Connect</h1>
+        </div>
+        <nav>
+            <a href="/" class="btn btn-secondary">Home</a>
+            <a href="http://127.0.0.1:3002/" class="btn btn-secondary">Register as Lawyer</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="lawyer-listings">
+            <h2>Available Lawyers</h2>
+
+            <form action="/" method="get">
+                <input type="text" name="specialization" placeholder="Search by practice area..." value="{{ specialization }}">
+                <button type="submit">Search</button>
+            </form>
+
+            <div class="lawyer-grid">
+                {% if lawyers %}
+                    {% for lawyer in lawyers %}
+                    <div class="lawyer-card">
+                        <div class="lawyer-profile">
+                            <div class="profile-info">
+                                <h3>Atty. {{ lawyer.name }}</h3>
+                                <p><strong>Practice Area:</strong> {{ lawyer.specialization }}</p>
+                            </div>
+                        </div>
+                        <div class="lawyer-info">
+                            <p><strong>Email:</strong> {{ lawyer.email }}</p>
+                            <p><strong>Experience:</strong> {{ lawyer.experience }} years</p>
+                            <p>{{ lawyer.description }}</p>
+                        </div>
+                        
+                        <div class="button-group">
+                            <button class="book-btn" data-email="{{ lawyer.email }}" onclick="openModal(this.getAttribute('data-email'))">Schedule Consultation</button>
+                            
+                            {% if lawyer.meet_links and lawyer.meet_links|length > 0 %}
+                            <a href="{{ lawyer.meet_links[0] }}" target="_blank" class="meet-btn">Join Video Conference</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No lawyers found for this practice area.</p>
+                {% endif %}
+            </div>
+            
+            <div id="appointmentModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <h3>Schedule Consultation</h3>
+                    <label>Select Date & Time:</label>
+                    <input type="datetime-local" id="appointmentTime">
+                    <input type="hidden" id="lawyerEmail">
+                    <button onclick="bookAppointment()">Next</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LegalPro Connect. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        function openModal(email) {
+            document.getElementById('lawyerEmail').value = email;
+            document.getElementById('appointmentModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('appointmentModal').style.display = 'none';
+        }
+        
+        function bookAppointment() {
+            const email = document.getElementById('lawyerEmail').value;
+            const time = document.getElementById('appointmentTime').value;
+            const formattedTime = new Date(time).toLocaleString();
+            
+            // Get lawyer's name
+            const lawyerCard = document.querySelector(`.book-btn[data-email="${email}"]`).closest('.lawyer-card');
+            const lawyerName = lawyerCard.querySelector('h3').innerText.replace('Atty. ', '');
+        
+            const subject = 'Consultation Request';
+            const body = `Dear Attorney ${lawyerName},\r\n\r\n` +
+                         `I hope this message finds you well. I would like to schedule a consultation\r\n` +
+                         `for legal advice on ${formattedTime}.\r\n\r\n` +
+                         `Could you please confirm if this time slot is available in your schedule?\r\n` +
+                         `If this time doesn't work, I'd be happy to accommodate your earliest\r\n` +
+                         `convenient time.\r\n\r\n` +
+                         `Looking forward to your response.\r\n\r\n` +`(attach your case details)`+
+                         `Best regards.`;
+        
+            window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+    </script>
+</body>
+</html>

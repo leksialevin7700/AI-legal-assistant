@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Argument Builder</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --light-bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1a202c;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glow-color: rgba(49, 130, 206, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: var(--light-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 2rem 2.5rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .card:hover .card-header::before {
+            transform: translateX(100%);
+        }
+
+        .card-header i {
+            color: white;
+            font-size: 1.75rem;
+            margin-right: 1rem;
+            opacity: 0.9;
+        }
+
+        .card-header h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: -0.25px;
+        }
+
+        .card-body {
+            padding: 2.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            border: 2px solid var(--border-color);
+            font-size: 1rem;
+            color: var(--text-primary);
+            resize: vertical;
+            transition: var(--transition);
+            font-family: inherit;
+            line-height: 1.6;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px var(--glow-color);
+            transform: translateY(-1px);
+        }
+
+        textarea::placeholder {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            padding: 1.25rem 2.5rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem auto 0;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            min-width: 200px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn i {
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .results {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideInUp 0.6s ease forwards;
+        }
+
+        @keyframes slideInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-section {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .result-section::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 2px;
+        }
+
+        .result-section:hover {
+            background: #f8fafc;
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+
+        .result-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.25px;
+        }
+
+        .result-section h3 i {
+            margin-right: 0.75rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .result-section p {
+            color: var(--text-primary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .result-section ul {
+            margin-top: 0.75rem;
+            margin-left: 1.5rem;
+        }
+
+        .result-section li {
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+        }
+
+        .professional-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--success-color), #48bb78);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .professional-badge i {
+            margin-right: 0.5rem;
+        }
+
+        /* Enhanced responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            body {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2.25rem;
+            }
+            
+            .logo i {
+                font-size: 2.5rem;
+            }
+            
+            .card-header {
+                padding: 1.5rem;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            header {
+                padding: 2rem 0;
+            }
+            
+            .submit-btn {
+                width: 100%;
+                margin-top: 1.5rem;
+            }
+            
+            .result-section {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .card-header {
+                padding: 1.25rem;
+            }
+            
+            .card-body {
+                padding: 1.25rem;
+            }
+            
+            textarea {
+                min-height: 150px;
+                padding: 1.25rem;
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .loading .submit-btn {
+            background: var(--text-secondary);
+        }
+
+        /* Focus states for accessibility */
+        .submit-btn:focus-visible {
+            outline: 2px solid var(--secondary-color);
+            outline-offset: 2px;
+        }
+
+        textarea:focus-visible {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-balance-scale"></i>
+                <div>
+                    <h1>Legal Argument Builder</h1>
+                    <div class="professional-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        Professional Legal AI
+                    </div>
+                </div>
+            </div>
+            <p class="tagline">Advanced AI-powered legal case analysis and strategic preparation for legal professionals</p>
+        </header>
+
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-gavel"></i>
+                <h2>Case Analysis Input</h2>
+            </div>
+
+            <div class="card-body">
+                <form action="/process_case" method="POST">
+                    <div class="input-group">
+                        <label for="case_description">Case Description</label>
+                        <textarea 
+                            id="case_description" 
+                            name="case_description" 
+                            placeholder="Provide a detailed description of your legal case, including key facts, parties involved, and primary legal issues. The more detailed your input, the more comprehensive our analysis will be..."
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-chart-line"></i>
+                        Generate Legal Analysis
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        {% if case_description %}
+        <div class="results">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-file-contract"></i>
+                    <h2>Comprehensive Legal Analysis</h2>
+                </div>
+                <div class="card-body">
+                    <div class="result-section">
+                        <h3><i class="fas fa-clipboard-list"></i> Executive Case Summary</h3>
+                        <p>{{ case_description }}</p>
+                    </div>
+
+                    <div class="result-section">
+                        <h3><i class="fas fa-key"></i> Strategic Key Points</h3>
+                        <div>{{ key_points|safe }}</div>
+                    </div>
+
+                    <div class="result-section">
+                        <h3><i class="fas fa-question-circle"></i> Recommended Court Questions</h3>
+                        <div>{{ court_questions|safe }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <footer>
+            <p><strong>LawBot Professional</strong> | Advanced Legal AI Solutions</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">© 2025 All Rights Reserved | Confidential Legal Technology</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.querySelector('textarea');
+            const form = document.querySelector('form');
+            const submitBtn = document.querySelector('.submit-btn');
+            
+            if (textarea) {
+                // Auto-resize textarea
+                textarea.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = Math.max(180, this.scrollHeight) + 'px';
+                });
+                
+                // Enhanced focus effects
+                textarea.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                
+                textarea.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            }
+            
+            // Form submission handling
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+                    document.body.classList.add('loading');
+                });
+            }
+            
+            // Results visibility
+            const resultsSection = document.querySelector('.results');
+            const caseDescription = "{{ case_description }}";
+            
+            if (resultsSection && (!caseDescription || caseDescription.trim() === '')) {
+                resultsSection.style.display = 'none';
+            }
+            
+            // Smooth scroll to results
+            if (resultsSection && resultsSection.style.display !== 'none') {
+                setTimeout(() => {
+                    resultsSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>

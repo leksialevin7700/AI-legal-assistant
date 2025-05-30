@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - Lawyer Connect</title>
+    <style>
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h2 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+        
+        /* Main content */
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0;
+        }
+        
+        .profile-header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            padding: 40px;
+            border-radius: 8px 8px 0 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .profile-header-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .profile-header-info {
+            margin-left: 20px;
+        }
+        
+        .profile-header-info h2 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        
+        .profile-header-info p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-picture-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #e9ecef;
+            color: #6c757d;
+            font-size: 36px;
+        }
+        
+        .profile-nav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-logout {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-logout:hover {
+            background-color: #c82333;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .profile-content {
+            background: white;
+            padding: 40px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Flash messages */
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        
+        .flash-message {
+            padding: 10px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .flash-success {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .flash-danger {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .profile-section {
+            margin-bottom: 30px;
+        }
+        
+        .profile-section h3 {
+            color: #1a3c6e;
+            font-size: 22px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .profile-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-item label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        .info-item p {
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        /* Form styles */
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #1a3c6e;
+            box-shadow: 0 0 0 2px rgba(26, 60, 110, 0.1);
+            outline: none;
+        }
+        
+        .form-hint {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        /* Profile image upload */
+        .profile-pic-upload {
+            margin-top: 10px;
+        }
+        
+        .profile-pic-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .custom-file-upload {
+            display: inline-block;
+            padding: 8px 12px;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .custom-file-upload:hover {
+            background-color: #e9ecef;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .selected-file-name {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        /* Meeting links */
+        .meet-links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .meet-link-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .meet-link {
+            color: #0066cc;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        
+        .meet-link:hover {
+            text-decoration: underline;
+        }
+        
+        .meet-links-actions {
+            margin-top: 10px;
+        }
+        
+        .inline-form {
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .meet-links-list {
+            margin-top: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        
+        .meet-link-manage-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .meet-link-manage-item:last-child {
+            border-bottom: none;
+        }
+        
+        .meet-link-text {
+            word-break: break-all;
+            margin-right: 10px;
+            flex: 1;
+        }
+        
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+        
+        .btn-submit {
+            grid-column: 1 / -1;
+            padding: 15px;
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 60, 110, 0.2);
+        }
+        
+        /* Stats Footer */
+        .profile-footer {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a3c6e;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 40px 20px;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            
+            .profile-header-content {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+            
+            .profile-header-info {
+                margin-left: 0;
+                margin-top: 15px;
+                text-align: center;
+            }
+            
+            .profile-content {
+                padding: 30px 20px;
+            }
+            
+            .profile-form, .profile-info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .nav-links a {
+                margin: 0 10px;
+            }
+            
+            .profile-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show filename when file is selected
+            document.getElementById('profile_pic').addEventListener('change', function() {
+                var fileName = this.files[0].name;
+                document.getElementById('file-name').textContent = fileName;
+            });
+        });
+    </script>
+</head>
+<body>
+    {% extends "base.html" %}
+    
+    {% block content %}
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="/api/placeholder/40/40" alt="Lawyer Connect Logo">
+                <h2>Lawyer Connect</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Dashboard</a>
+                <a href="#">Cases</a>
+                <a href="#">Messages</a>
+                <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        <div class="profile-header">
+            <div class="profile-header-content">
+                <div class="profile-picture">
+                    {% if lawyer.profile_pic %}
+                        <img src="{{ lawyer.profile_pic }}" alt="{{ lawyer.name }}'s profile picture">
+                    {% else %}
+                        <div class="profile-picture-placeholder">
+                            {{ lawyer.name[0].upper() }}
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="profile-header-info">
+                    <h2>{{ lawyer.name }}</h2>
+                    <p>{{ lawyer.specialization }} Attorney</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-section">
+                <h3>Professional Information</h3>
+                <div class="profile-info-grid">
+                    <div class="info-item">
+                        <label>Email</label>
+                        <p>{{ lawyer.email }}</p>
+                    </div>
+
+                    <div class="info-item">
+                        <label>Specialization</label>
+                        <p>{{ lawyer.specialization }}</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Years of Experience</label>
+                        <p>{{ lawyer.experience }} Years</p>
+                    </div>
+                    
+                    <!-- Video Consultation Links -->
+                    <div class="info-item full-width">
+                        <label>Video Consultation Links</label>
+                        {% if lawyer.meet_links and lawyer.meet_links|length > 0 %}
+                            <div class="meet-links-container">
+                                {% for link in lawyer.meet_links %}
+                                    <div class="meet-link-item">
+                                        <a href="{{ link }}" target="_blank" class="meet-link">{{ link }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No meeting links available. Add one below.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile-section">
+                <h3>Professional Bio</h3>
+                <div class="bio-content">
+                    <p>{{ lawyer.description }}</p>
+                </div>
+            </div>
+            
+            <div class="profile-section">
+                <h3>Edit Profile</h3>
+                <form method="POST" action="{{ url_for('profile') }}" class="profile-form" enctype="multipart/form-data">
+                    <div class="form-group profile-pic-upload">
+                        <label class="profile-pic-label">Update Profile Picture</label>
+                        <label class="custom-file-upload">
+                            <input type="file" name="profile_pic" id="profile_pic" accept="image/*">
+                            Choose File
+                        </label>
+                        <span class="selected-file-name" id="file-name">No file chosen</span>
+                        <div class="form-hint">Recommended size: 300x300 pixels (square)</div>
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <label for="specialization">Specialization:</label>
+                        <input type="text" id="specialization" name="specialization" value="{{ lawyer.specialization }}" required>
+                        <div class="form-hint">Your primary area of legal practice</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Years of Experience:</label>
+                        <input type="number" id="experience" name="experience" value="{{ lawyer.experience }}" min="0" max="70" required>
+                        <div class="form-hint">How long you've been practicing law</div>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label for="description">Professional Bio</label>
+                        <textarea id="description" name="description" required>{{ lawyer.description }}</textarea>
+                        <div class="form-hint">Describe your professional background and expertise</div>
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">Update Profile</button>
+                </form>
+            </div>
+            
+            <!-- Meet Links Management Section -->
+            <div class="profile-section">
+                <h3>Manage Consultation Links</h3>
+                <div class="meet-links-actions">
+                    <form method="POST" action="{{ url_for('add_meet_link') }}" class="inline-form">
+                        <button type="submit" class="btn btn-secondary">Generate New Meet Link</button>
+                    </form>
+                    
+                    {% if lawyer.meet_links and lawyer.meet_links|length > 0 %}
+                        <div class="meet-links-list">
+                            {% for link in lawyer.meet_links %}
+                                <div class="meet-link-manage-item">
+                                    <span class="meet-link-text">{{ link }}</span>
+                                    <form method="POST" action="{{ url_for('remove_meet_link', link=link) }}" class="inline-form">
+                                        <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                    </form>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stats Footer -->
+        <div class="profile-footer">
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-value">{{ lawyer.total_cases|default(0) }}</span>
+                    <span class="stat-label">Total Cases</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ lawyer.client_rating|default('N/A') }}</span>
+                    <span class="stat-label">Client Rating</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ lawyer.success_rate|default('0%') }}</span>
+                    <span class="stat-label">Success Rate</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

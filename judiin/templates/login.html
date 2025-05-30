@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Lawyer Connect</title>
+    <style>
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h2 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+        
+        /* Main content */
+        .container {
+            max-width: 500px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: #1a3c6e;
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #ffd700;
+            border-radius: 3px;
+        }
+        
+        form {
+            margin-top: 30px;
+        }
+        
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        form input:focus,
+        form textarea:focus {
+            border-color: #1a3c6e;
+            box-shadow: 0 0 0 2px rgba(26, 60, 110, 0.1);
+            outline: none;
+        }
+        
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 60, 110, 0.2);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        
+        .form-footer a {
+            color: #1a3c6e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .form-footer a:hover {
+            color: #2a5298;
+            text-decoration: underline;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a3c6e;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 40px 20px;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .nav-links a {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    
+    {% block content %}
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="/api/placeholder/40/40" alt="Lawyer Connect Logo">
+                <h2>Lawyer Connect</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+                <a href="{{ url_for('signup') }}">Sign Up</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h2>Login to Your Account</h2>
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="form-footer">
+            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up now</a></p>
+            <p><a href="#">Forgot your password?</a></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Lawyer Connect. All rights reserved.</p>
+    </footer>
+    {% endblock %}
+</body>
+</html>

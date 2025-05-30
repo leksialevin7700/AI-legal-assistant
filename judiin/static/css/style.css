@@ -1,0 +1,194 @@
+/* Additional CSS for lawyer profiles and MongoDB integration */
+
+/* Profile Container */
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.profile-card {
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-top: 20px;
+}
+
+.form-action {
+    margin-top: 30px;
+    text-align: right;
+}
+
+/* Lawyer Profile Cards */
+.lawyer-profile-card {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.lawyer-profile-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.lawyer-profile-pic {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--white);
+    font-size: 24px;
+}
+
+.lawyer-profile-info h3 {
+    margin: 0 0 5px 0;
+    color: var(--dark-gray);
+}
+
+.lawyer-email {
+    color: #666;
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+}
+
+.lawyer-specialization, .lawyer-experience, .lawyer-rate {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.lawyer-specialization i, .lawyer-experience i, .lawyer-rate i {
+    color: var(--primary-color);
+    margin-right: 5px;
+    width: 16px;
+    text-align: center;
+}
+
+.lawyer-bio {
+    padding: 10px 0;
+    border-top: 1px solid var(--medium-gray);
+    border-bottom: 1px solid var(--medium-gray);
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #444;
+}
+
+.lawyer-profile-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Lawyer Grid */
+.lawyers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .lawyers-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Search Filters */
+.search-filters {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-filters input, 
+.search-filters select {
+    padding: 10px;
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--radius);
+    flex: 1;
+}
+
+/* Messages UI */
+.messages-container {
+    background-color: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-top: 20px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.messages-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--medium-gray);
+    display: flex;
+    align-items: center;
+}
+
+.back-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: 20px;
+}
+
+.messages-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    position: relative;
+}
+
+.message.sent {
+    background-color: var(--primary-color);
+    color: var(--white);
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+.message.received {
+    background-color: #f0f0f0;
+    color: var(--dark-gray);
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    margin-top: 5px;
+    text-align: right;
+    opacity: 0.8;
+}
+
+.message-form {
+    padding: 15px;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.message-form form {
+    display: flex;
+    gap: 10px;
+}
+
+.message-form textarea {
+    flex: 1;
+    border: 1px solid var(--medium-gray);
+    border-radius: 20px;
+    padding: 10px 15;
+}

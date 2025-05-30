@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - LawBot</title>
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #3182ce;
+      --accent-color: #e53e3e;
+      --success-color: #38a169;
+      --warning-color: #dd6b20;
+      --light-bg: #f7fafc;
+      --card-bg: #ffffff;
+      --text-primary: #1a202c;
+      --text-secondary: #718096;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --glow-color: rgba(49, 130, 206, 0.25);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--light-bg) 0%, #edf2f7 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+    
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.025em;
+    }
+    
+    .logo i {
+      margin-right: 0.75rem;
+      color: #ffd700;
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.3));
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius-sm);
+      position: relative;
+    }
+    
+    .nav-links a:hover {
+      color: white;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 0 20px var(--glow-color);
+    }
+    
+    main {
+      margin-top: 2rem;
+    }
+    
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      min-height: 60vh;
+      position: relative;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 50%, var(--glow-color) 0%, transparent 70%);
+      z-index: -1;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin-bottom: 3rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.7;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+      filter: brightness(1.1);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .judi-section {
+      background: var(--card-bg);
+      margin: 2rem 0;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+    
+    .feature-card {
+      padding: 3rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(49, 130, 206, 0.05) 0%, rgba(26, 54, 93, 0.05) 100%);
+    }
+    
+    .feature-card h2 {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.5rem;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .feature-card p {
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--success-color) 0%, #2f855a 100%);
+    }
+    
+    .btn-primary:hover {
+      filter: brightness(1.1);
+    }
+    
+    .features {
+      padding: 5rem 0;
+      background: var(--card-bg);
+      margin: 2rem 0;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+    }
+    
+    .features h2 {
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      padding: 0 2rem;
+    }
+    
+    .feature-item {
+      text-align: center;
+      padding: 2.5rem;
+      border-radius: var(--border-radius);
+      transition: var(--transition);
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 100%);
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .feature-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--glow-color) 0%, transparent 50%);
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+    
+    .feature-item:hover::before {
+      opacity: 1;
+    }
+    
+    .feature-item:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-8px);
+      border-color: var(--secondary-color);
+    }
+    
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--secondary-color);
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+    }
+    
+    .feature-item:hover .feature-icon {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 15px var(--glow-color));
+    }
+    
+    .feature-item h3 {
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    
+    .feature-item p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    footer {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 3rem 0;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      margin-bottom: 2rem;
+      gap: 2rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: var(--transition);
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius-sm);
+    }
+    
+    .footer-links a:hover {
+      color: white;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+    }
+    
+    footer p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+    
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .feature-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1rem;
+      }
+      
+      .feature-card {
+        padding: 2rem 1rem;
+      }
+      
+      .container {
+        width: 95%;
+      }
+    }
+    
+    /* Smooth scrolling */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--light-bg);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--secondary-color);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-color);
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <div class="logo">
+          <i class="fas fa-balance-scale"></i> LawBot
+        </div>
+        <ul class="nav-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Welcome!!</h1>
+      <p>Your personal legal assistant dashboard. Access expert legal guidance anytime, and get instant answers to your legal questions with enterprise-grade security and professional reliability.</p>
+      <a href="/auth" class="btn" id="openChatBtn">Chat with LawBot</a>
+    </section>
+
+    <section class="judi-section">
+      <div class="feature-card">
+        <h2>Judi-In</h2>
+        <h3>Want to find clients? Register in Judi-In</h3>
+        <p>Professional lawyers can signup to connect with clients through our secure platform</p>
+        <a href="http://127.0.0.1:3002/" target="_blank" class="btn btn-primary">Visit Judi-In Portal</a>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <h2>Why Choose LawBot?</h2>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <h3>24/7 Availability</h3>
+            <p>Access professional legal guidance whenever you need it, day or night, without scheduling appointments or waiting periods.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Secure & Confidential</h3>
+            <p>Your conversations are private and protected with enterprise-grade security, ensuring complete confidentiality of your legal matters.</p>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Instant Responses</h3>
+            <p>Get immediate, accurate answers to your legal questions powered by advanced AI technology and comprehensive legal databases.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+      <p>&copy; 2025 LawBot. All rights reserved. Professional legal assistance powered by advanced AI.</p>
+    </div>
+  </footer>
+</body>
+</html>

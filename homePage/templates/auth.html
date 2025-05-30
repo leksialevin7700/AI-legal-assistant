@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LawBot - Login & Sign Up</title>
+  <style>
+    :root {
+      --primary-color: #1a365d;
+      --secondary-color: #3182ce;
+      --accent-color: #e53e3e;
+      --success-color: #38a169;
+      --warning-color: #dd6b20;
+      --light-bg: #f7fafc;
+      --card-bg: #ffffff;
+      --text-primary: #1a202c;
+      --text-secondary: #718096;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --border-radius: 16px;
+      --border-radius-sm: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --glass-bg: rgba(255, 255, 255, 0.15);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --glow-color: rgba(49, 130, 206, 0.25);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--light-bg) 0%, #e2e8f0 100%);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      z-index: -1;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+    
+    .logo:hover {
+      transform: translateY(-2px);
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .logo i {
+      margin-right: 0.5rem;
+      color: var(--warning-color);
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+    
+    .nav-links li {
+      margin-left: 2rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: var(--warning-color);
+      transition: var(--transition);
+    }
+    
+    .nav-links a:hover {
+      color: var(--warning-color);
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .auth-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      padding: 2rem 0;
+    }
+    
+    .auth-box {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+    
+    .auth-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color), var(--success-color));
+    }
+    
+    .auth-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      padding: 2rem;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    
+    .auth-header h2 {
+      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
+    }
+    
+    .auth-header p {
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+    
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--light-bg);
+    }
+    
+    .auth-tab {
+      flex: 1;
+      text-align: center;
+      padding: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      background-color: transparent;
+      transition: var(--transition);
+      color: var(--text-secondary);
+      position: relative;
+    }
+    
+    .auth-tab.active {
+      background-color: var(--card-bg);
+      color: var(--secondary-color);
+      box-shadow: var(--shadow-sm);
+    }
+    
+    .auth-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      border-radius: 2px;
+    }
+    
+    .auth-form-container {
+      padding: 2rem;
+      background: var(--card-bg);
+    }
+    
+    .auth-form {
+      display: none;
+    }
+    
+    .auth-form.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    
+    input {
+      width: 100%;
+      padding: 0.875rem;
+      border: 2px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      font-size: 1rem;
+      transition: var(--transition);
+      background: var(--card-bg);
+      color: var(--text-primary);
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 0 3px var(--glow-color);
+      transform: translateY(-1px);
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: var(--border-radius-sm);
+      transition: var(--transition);
+      font-size: 1.1rem;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .forgot-password {
+      text-align: right;
+      margin-bottom: 1.5rem;
+    }
+    
+    .forgot-password a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    
+    .forgot-password a:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    .or-divider {
+      text-align: center;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+    
+    .or-divider::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+      position: absolute;
+      top: 50%;
+      left: 0;
+    }
+    
+    .or-divider span {
+      background-color: var(--card-bg);
+      padding: 0 1rem;
+      position: relative;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    
+    .social-login {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .social-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.875rem;
+      border-radius: var(--border-radius-sm);
+      border: 2px solid var(--border-color);
+      background-color: var(--card-bg);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    .social-btn:hover {
+      background-color: var(--light-bg);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .social-btn i {
+      margin-right: 0.5rem;
+      font-size: 1.1rem;
+    }
+    
+    .google-btn {
+      color: #DB4437;
+      border-color: rgba(219, 68, 55, 0.2);
+    }
+    
+    .google-btn:hover {
+      border-color: #DB4437;
+      background-color: rgba(219, 68, 55, 0.05);
+    }
+    
+    .linkedin-btn {
+      color: #0077B5;
+      border-color: rgba(0, 119, 181, 0.2);
+    }
+    
+    .linkedin-btn:hover {
+      border-color: #0077B5;
+      background-color: rgba(0, 119, 181, 0.05);
+    }
+    
+    .legal-text {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 1.5rem;
+      line-height: 1.5;
+    }
+    
+    .legal-text a {
+      color: var(--secondary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .legal-text a:hover {
+      color: var(--accent-color);
+      text-decoration: underline;
+    }
+    
+    footer {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: auto;
+      position: relative;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--glass-bg);
+      backdrop-filter: blur(10px);
+      z-index: -1;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .footer-links li {
+      margin: 0 1rem 0.5rem;
+    }
+    
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+    
+    .footer-links a:hover {
+      color: var(--warning-color);
+      text-decoration: underline;
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .auth-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .social-login {
+        flex-direction: column;
+      }
+      
+      .container {
+        width: 95%;
+      }
+      
+      .auth-form-container {
+        padding: 1.5rem;
+      }
+      
+      .footer-links {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .footer-links li {
+        margin: 0.25rem 0;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav class="nav">
+        <a href="index.html" class="logo">
+          <i class="fas fa-balance-scale"></i> LawBot
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Pricing</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <h2>Welcome to LawBot</h2>
+        <p>Your AI-powered legal assistant</p>
+      </div>
+      
+      <div class="auth-tabs">
+        <div class="auth-tab active" id="login-tab">Login</div>
+        <div class="auth-tab" id="signup-tab">Sign Up</div>
+      </div>
+      
+      <div class="auth-form-container">
+        <!-- Login Form -->
+        <form class="auth-form active" id="login-form" action="/chat" method="POST">
+          <div class="form-group">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" name="login-email" required>
+          </div>
+      
+          <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" name="login-password" required>
+          </div>
+      
+          <div class="forgot-password">
+              <a href="#">Forgot Password?</a>
+          </div>
+      
+          <button type="submit" class="btn">Login</button>
+        </form>
+        
+        <!-- Signup Form -->
+        <form class="auth-form" id="signup-form" action="/auth/register" method="POST">
+          <div class="form-group">
+            <label for="signup-name">Full Name</label>
+            <input type="text" id="signup-name" name="signup-name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" name="signup-email" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" name="signup-password" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-confirm">Confirm Password</label>
+            <input type="password" id="signup-confirm" name="signup-confirm" required>
+          </div>
+          
+          <button type="submit" class="btn">Create Account</button>
+          
+          <div class="or-divider">
+            <span>OR</span>
+          </div>
+          
+          <div class="social-login">
+            <button type="button" class="social-btn google-btn">
+              <i class="fab fa-google"></i> Google
+            </button>
+            <button type="button" class="social-btn linkedin-btn">
+              <i class="fab fa-linkedin-in"></i> LinkedIn
+            </button>
+          </div>
+          
+          <p class="legal-text">
+            By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="#">Terms of Service</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Support</a></li>
+      </ul>
+      <p>&copy; 2025 LawBot. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching functionality
+    const loginTab = document.getElementById("login-tab");
+    const signupTab = document.getElementById("signup-tab");
+    const loginForm = document.getElementById("login-form");
+    const signupForm = document.getElementById("signup-form");
+    
+    loginTab.addEventListener("click", () => {
+      loginTab.classList.add("active");
+      signupTab.classList.remove("active");
+      loginForm.classList.add("active");
+      signupForm.classList.remove("active");
+    });
+    
+    signupTab.addEventListener("click", () => {
+      signupTab.classList.add("active");
+      loginTab.classList.remove("active");
+      signupForm.classList.add("active");
+      loginForm.classList.remove("active");
+    });
+  </script>
+</body>
+</html>

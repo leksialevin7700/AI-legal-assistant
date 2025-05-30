@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Case Assistant</title>
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --light-bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1a202c;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glow-color: rgba(49, 130, 206, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e2e8f0 25%, #cbd5e0 50%, #a0aec0 75%, var(--text-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem 0;
+            line-height: 1.6;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .logo i {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-right: 1rem;
+            text-shadow: var(--shadow-sm);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: var(--shadow-sm);
+            letter-spacing: -0.025em;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 0.5rem;
+        }
+
+        .main-content {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .case-input-container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .results-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+            .results-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            height: 100%;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 25px var(--glow-color);
+        }
+
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            border-radius: var(--border-radius);
+            z-index: -1;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .glow-effect:hover::before {
+            opacity: 0.3;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .card-header i {
+            color: white;
+            font-size: 1.4rem;
+            margin-right: 1rem;
+        }
+
+        .card-header h2 {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 2rem 1.5rem;
+        }
+
+        .input-field {
+            margin-bottom: 2rem;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--glow-color);
+            border-color: var(--secondary-color);
+            background: var(--card-bg);
+        }
+
+        textarea::placeholder {
+            color: var(--text-secondary);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(49, 130, 206, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button i {
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .results {
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .result-section {
+            background: rgba(49, 130, 206, 0.05);
+            border-radius: var(--border-radius-sm);
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .result-section:hover {
+            background: rgba(49, 130, 206, 0.08);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .analysis-content {
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .analysis-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .analysis-content ul {
+            padding-left: 1.5rem;
+            list-style-type: disc;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .analysis-content li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.5rem;
+        }
+        
+        .analysis-content em {
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        .analysis-content strong {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader p {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .alert {
+            background: rgba(229, 62, 62, 0.1);
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            margin-bottom: 1rem;
+            display: none;
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+
+            .logo h1 {
+                font-size: 2rem;
+            }
+
+            .logo i {
+                font-size: 2rem;
+            }
+
+            .card-body {
+                padding: 1.5rem 1rem;
+            }
+
+            .card-header {
+                padding: 1rem 1.25rem;
+            }
+
+            textarea {
+                min-height: 150px;
+            }
+
+            button {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .results-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .card-header {
+                text-align: center;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+               
+                <h1>Legal Citation Analyzer</h1>
+            </div>
+            <p class="tagline">AI-powered analysis for your legal cases</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="case-input-container">
+                <div class="card glow-effect">
+                    <div class="card-header">
+                       
+                        <h2>Case Description</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="caseForm" action="/process_case" method="POST">
+                            <div class="input-field">
+                                <label for="case_description">Enter your case details:</label>
+                                <textarea id="case_description" name="case_description" placeholder="Describe the legal case in detail including facts, legal issues, jurisdiction, and any specific questions you need help with..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" id="submitBtn" class="glow-effect">
+                                <i class="fas fa-search"></i>
+                                <span>Analyze Case</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loader" class="loader">
+            <div class="spinner"></div>
+            <p>Analyzing your case...</p>
+        </div>
+    </div>
+    
+    <!-- Demo Results Section -->
+    <div class="results" id="resultsSection" style="display: none;">
+        <div class="container">
+            <div class="results-content">
+                <div class="card glow-effect">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb"></i>
+                        <h2>Key Points</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="result-section">
+                            <div class="analysis-content">
+                                <h3>Legal Analysis Summary</h3>
+                                <ul>
+                                    <li><strong>Primary Issue:</strong> Contract interpretation and breach of terms</li>
+                                    <li><strong>Jurisdiction:</strong> State court with commercial law application</li>
+                                    <li><strong>Key Facts:</strong> Material breach identified in performance obligations</li>
+                                    <li><strong>Applicable Law:</strong> <em>Uniform Commercial Code provisions</em></li>
+                                </ul>
+                                <p>The case presents clear grounds for pursuing damages based on established precedent and statutory requirements.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card glow-effect">
+                    <div class="card-header">
+                        <i class="fas fa-gavel"></i>
+                        <h2>Suggested Court Questions</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="result-section">
+                            <div class="analysis-content">
+                                <h3>Strategic Questions for Court Proceedings</h3>
+                                <ul>
+                                    <li>What evidence supports the claim of material breach?</li>
+                                    <li>How do recent precedents in similar cases apply here?</li>
+                                    <li>What damages can be reasonably calculated and proven?</li>
+                                    <li>Are there any procedural requirements that need addressing?</li>
+                                </ul>
+                                <p><strong>Note:</strong> <em>These questions should be tailored based on specific case facts and local court procedures.</em></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Legal Case Assistant &copy; 2025 | AI-powered legal analysis tool</p>
+    </footer>
+    
+    <script>
+        document.getElementById('caseForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent actual form submission for demo
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loader = document.getElementById('loader');
+            const resultsSection = document.getElementById('resultsSection');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Processing...</span>';
+            loader.style.display = 'block';
+            
+            // Simulate processing time
+            setTimeout(() => {
+                // Hide loader
+                loader.style.display = 'none';
+                
+                // Show results
+                resultsSection.style.display = 'block';
+                
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-search"></i><span>Analyze Case</span>';
+            }, 3000);
+        });
+        
+        // Add some interactivity
+        document.getElementById('case_description').addEventListener('focus', function() {
+            this.parentNode.style.transform = 'scale(1.01)';
+        });
+        
+        document.getElementById('case_description').addEventListener('blur', function() {
+            this.parentNode.style.transform = 'scale(1)';
+        });
+    </script>
+    
+    <!-- Font Awesome for icons -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

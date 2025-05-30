@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Connect - Professional Legal Network</title>
+    <style>
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h2 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+        
+        /* Main content */
+        .hero {
+            background-image: url("/api/placeholder/1200/600");
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #ffd700;
+            color: #333;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e6c200;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Features section */
+        .features {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #1a3c6e;
+            margin-bottom: 10px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: #666;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #e6efff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 24px;
+            color: #1a3c6e;
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #1a3c6e;
+        }
+        
+        .feature-card p {
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a3c6e;
+            color: #fff;
+            padding: 40px 0;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #ffd700;
+        }
+        
+        .footer-col p {
+            margin-bottom: 15px;
+            color: #ccc;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-col ul li a:hover {
+            color: #ffd700;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .nav-links a {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    
+    {% block content %}
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="/api/placeholder/40/40" alt="Lawyer Connect Logo">
+                <h2>Lawyer Connect</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+                <a href="{{ url_for('login') }}">Login</a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Build Your Legal Practice</h1>
+            <p>Join our network of legal professionals to showcase your expertise, connect with clients, and grow your practice.</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('signup') }}" class="btn btn-primary">Create Your Profile</a>
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="section-title">
+            <h2>Why Join Lawyer Connect?</h2>
+            <p>Discover the benefits of being part of our professional network</p>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i>⚖️</i>
+                </div>
+                <h3>Find Cases</h3>
+                <p>Access a wide range of legal cases that match your expertise and interests.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i>👥</i>
+                </div>
+                <h3>Professional Profile</h3>
+                <p>Create a comprehensive profile showcasing your skills, experience, and success stories.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i>📊</i>
+                </div>
+                <h3>Grow Your Practice</h3>
+                <p>Expand your client base and establish your reputation in the legal community.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h3>About Lawyer Connect</h3>
+                <p>Lawyer Connect is a professional platform connecting skilled attorneys with clients seeking legal representation.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>Email: info@lawyerconnect.com</p>
+                <p>Phone: (123) 456-7890</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Lawyer Connect. All rights reserved.</p>
+        </div>
+    </footer>
+    {% endblock %}
+</body>
+</html>

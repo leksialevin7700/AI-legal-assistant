@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Lawyer Connect</title>
+    <style>
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h2 {
+            color: #fff;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+        
+        /* Main content */
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        h2 {
+            color: #1a3c6e;
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #ffd700;
+            border-radius: 3px;
+        }
+        
+        form {
+            margin-top: 30px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .form-grid .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: #1a3c6e;
+            box-shadow: 0 0 0 2px rgba(26, 60, 110, 0.1);
+            outline: none;
+        }
+        
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-hint {
+            font-size: 12px;
+            color: #777;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1a3c6e 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 60, 110, 0.2);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        
+        .form-footer a {
+            color: #1a3c6e;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .form-footer a:hover {
+            color: #2a5298;
+            text-decoration: underline;
+        }
+        
+        .terms {
+            margin: 20px 0;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1a3c6e;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 40px 20px;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+            }
+            
+            .nav-links a {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% extends "base.html" %}
+    
+    {% block content %}
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <img src="/api/placeholder/40/40" alt="Lawyer Connect Logo">
+                <h2>Lawyer Connect</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+                <a href="{{ url_for('login') }}">Login</a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h2>Lawyer Signup</h2>
+        <p class="terms">Join our professional network and start growing your legal practice</p>
+        
+        <form method="POST" action="{{ url_for('signup') }}">
+            <div class="form-grid">
+                <div>
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <div class="form-hint">Please enter your name as it appears on your legal credentials</div>
+                </div>
+                
+                <div>
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="form-hint">This will be used for login and communications</div>
+                </div>
+                
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="form-hint">Use at least 8 characters with letters and numbers</div>
+                </div>
+                
+                <div>
+                    <label for="specialization">Legal Specialization:</label>
+                    <input type="text" id="specialization" name="specialization" required>
+                    <div class="form-hint">E.g. Family Law, Corporate Law, Criminal Defense</div>
+                </div>
+                
+                
+                <div>
+                    <label for="experience">Years of Experience:</label>
+                    <input type="number" id="experience" name="experience" required min="0" max="70">
+                    <div class="form-hint">How long have you been practicing law?</div>
+                </div>
+                
+                <div>
+                    <label for="bar_number">Bar Number (Optional):</label>
+                    <input type="text" id="bar_number" name="bar_number">
+                    <div class="form-hint">Your state bar association number if applicable</div>
+                </div>
+                
+                <div class="full-width">
+                    <label for="description">Professional Bio:</label>
+                    <textarea id="description" name="description" rows="5" required></textarea>
+                    <div class="form-hint">Describe your practice, approach, and success stories (500 characters max)</div>
+                </div>
+            </div>
+            
+            <div class="terms">
+                By creating an account, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </div>
+            
+            <button type="submit">Create Account</button>
+        </form>
+        
+        <div class="form-footer">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Lawyer Connect. All rights reserved.</p>
+    </footer>
+    {% endblock %}
+</body>
+</html>

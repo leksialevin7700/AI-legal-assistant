@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Assistant - Mobile First</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #3182ce;
+            --accent-color: #e53e3e;
+            --success-color: #38a169;
+            --warning-color: #dd6b20;
+            --light-bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1a202c;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
+            --border-radius-sm: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--light-bg);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow: hidden;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+            background: var(--card-bg);
+            position: relative;
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            background: var(--card-bg);
+            padding: 20px 20px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--light-bg);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .header-btn:hover {
+            background: var(--border-color);
+            transform: scale(1.05);
+        }
+
+        /* Status Bar */
+        .status-bar {
+            background: linear-gradient(90deg, var(--success-color), #48bb78);
+            color: white;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            background: var(--light-bg);
+            margin: 15px 20px;
+            border-radius: var(--border-radius);
+            padding: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 16px;
+            text-align: center;
+            border-radius: var(--border-radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .nav-tab.active {
+            background: var(--card-bg);
+            color: var(--secondary-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Messages Area */
+        .messages-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: var(--light-bg);
+            scroll-behavior: smooth;
+        }
+
+        .welcome-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .welcome-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .welcome-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .welcome-subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 2px solid transparent;
+        }
+
+        .action-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--secondary-color);
+        }
+
+        .action-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .action-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .action-subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Messages */
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-bubble {
+            max-width: 85%;
+            padding: 14px 18px;
+            border-radius: 20px;
+            position: relative;
+            word-wrap: break-word;
+        }
+
+        .message.bot .message-bubble {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            border-bottom-left-radius: 6px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .message.user .message-time {
+            text-align: right;
+        }
+
+        .message.bot .message-time {
+            text-align: left;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 14px 18px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border-bottom-left-radius: 6px;
+            max-width: 80px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        /* Input Container */
+        .input-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .input-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--secondary-color);
+        }
+
+        .checkbox-wrapper label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .attachment-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--light-bg);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .attachment-btn:hover {
+            background: var(--border-color);
+            color: var(--secondary-color);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--light-bg);
+            border-radius: 25px;
+            padding: 4px;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        }
+
+        #userInput {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 14px 18px;
+            font-size: 16px;
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        #userInput::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-right: 2px;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Desktop Responsive */
+        @media (min-width: 768px) {
+            .quick-actions {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .nav-tabs {
+                margin: 20px 30px;
+            }
+
+            .messages-area {
+                padding: 30px;
+            }
+
+            .input-container {
+                padding: 25px 30px;
+            }
+        }
+
+        /* Large Desktop */
+        @media (min-width: 1024px) {
+            .message-bubble {
+                max-width: 70%;
+            }
+        }
+
+        /* Hide scrollbar for webkit browsers */
+        .messages-area::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .messages-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .messages-area::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 2px;
+        }
+
+        .messages-area::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Smooth animations */
+        .message {
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Mobile Header -->
+        <div class="mobile-header">
+            <div class="header-left">
+                <div class="logo-icon">
+                    <i class="fas fa-balance-scale"></i>
+                </div>
+                <div class="header-title">LegalAI</div>
+            </div>
+            <div class="header-actions">
+                <button class="header-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="header-btn">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-dot"></div>
+            <span>AI Legal Assistant - Online & Ready</span>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <div class="nav-tab active">Chat</div>
+            <div class="nav-tab" onclick="window.open('http://127.0.0.1:3003/', '_blank')">Docs</div>
+            <div class="nav-tab" onclick="window.open('http://127.0.0.1:5045/', '_blank')">Citations</div>
+            <div class="nav-tab" onclick="window.open('http://127.0.0.1:5001/', '_blank')">Appointments</div>
+            <div class="nav-tab" onclick="window.open('http://127.0.0.1:5089/', '_blank')">Argument Builder</div>
+        </div>
+
+        <!-- Chat Container -->
+        <div class="chat-container">
+            <div class="messages-area" id="messagesArea">
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <div class="welcome-icon">
+                        <i class="fas fa-scale-balanced"></i>
+                    </div>
+                    <div class="welcome-title">Welcome to Legal Assistant</div>
+                    <div class="welcome-subtitle">Get instant legal guidance, document analysis, and expert advice powered by AI</div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <div class="action-card" onclick="window.open('http://127.0.0.1:3003/', '_blank')">
+                        <div class="action-icon">📋</div>
+                        <div class="action-title">Document Analysis</div>
+                        <div class="action-subtitle">Create summarized docs</div>
+                    </div>
+                        <div class="action-card" onclick="window.open('http://127.0.0.1:5045/', '_blank')">
+                        <div class="action-icon">⚖</div>
+                        <div class="action-title">Citations</div>
+                        <div class="action-subtitle">Give decsription and get the citations</div>
+                    </div>
+                    <div class="action-card" onclick="window.open('http://127.0.0.1:5089/', '_blank')">
+                        <div class="action-icon">✍</div>
+                        <div class="action-title">Argument Builder</div>
+                        <div class="action-subtitle">Get key points and argumental questions</div>
+                    </div>
+                    <div class="action-card" onclick="window.open('http://127.0.0.1:5001/', '_blank')">
+                        <div class="action-icon">🔍</div>
+                        <div class="action-title">Appointments</div>
+                        <div class="action-subtitle">Find Lawyers</div>
+                    </div>
+                </div>
+
+                <!-- Initial Bot Message -->
+                <div class="message bot">
+                    <div class="message-bubble">
+                        Hello! I'm your AI legal assistant. How can I help you with your legal matters today?
+                    </div>
+                    <div class="message-time">Today, 10:30 AM</div>
+                </div>
+            </div>
+
+            <!-- Input Container -->
+            <div class="input-container">
+                <div class="input-options">
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="lineByLineToggle">
+                        <label for="lineByLineToggle">Line by Line Markdown</label>
+                    </div>
+                    <button class="attachment-btn">
+                        <i class="fas fa-paperclip"></i>
+                    </button>
+                </div>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="userInput" 
+                        placeholder="Ask your legal question..."
+                        onkeydown="if(event.key === 'Enter') sendMessage()"
+                    >
+                    <button class="send-btn" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function sendMessage() {
+            const userInput = document.getElementById("userInput").value.trim();
+            if (!userInput) return;
+
+            const lineByLine = document.getElementById("lineByLineToggle").checked;
+            const messagesArea = document.getElementById("messagesArea");
+            const currentTime = getCurrentTime();
+
+            // Hide welcome content on first message
+            const welcomeCard = document.querySelector('.welcome-card');
+            const quickActions = document.querySelector('.quick-actions');
+            if (welcomeCard) welcomeCard.style.display = 'none';
+            if (quickActions) quickActions.style.display = 'none';
+
+            // Add user message
+            const userMessageHtml = `
+                <div class="message user">
+                    <div class="message-bubble">
+                        ${userInput}
+                    </div>
+                    <div class="message-time">Today, ${currentTime}</div>
+                </div>
+            `;
+            messagesArea.insertAdjacentHTML('beforeend', userMessageHtml);
+
+            // Add typing indicator
+            const typingIndicatorId = 'typing-indicator-' + Date.now();
+            const typingHtml = `
+                <div id="${typingIndicatorId}" class="message bot">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            `;
+            messagesArea.insertAdjacentHTML('beforeend', typingHtml);
+
+            // Scroll to bottom
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+
+            // Clear input
+            document.getElementById("userInput").value = "";
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: userInput,
+                        line_by_line: lineByLine
+                    })
+                });
+
+                // Remove typing indicator
+                const typingIndicator = document.getElementById(typingIndicatorId);
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    const errorMessage = errorData.error || "Error occurred";
+                    const errorHtml = `
+                        <div class="message bot">
+                            <div class="message-bubble" style="color: var(--accent-color);">
+                                ${errorMessage}
+                            </div>
+                            <div class="message-time">Today, ${getCurrentTime()}</div>
+                        </div>
+                    `;
+                    messagesArea.insertAdjacentHTML('beforeend', errorHtml);
+                    messagesArea.scrollTop = messagesArea.scrollHeight;
+                    return;
+                }
+
+                const data = await response.json();
+                let botReply = "";
+
+                if (lineByLine && Array.isArray(data.reply)) {
+                    botReply = data.reply.join("<br>");
+                } else {
+                    botReply = data.reply;
+                }
+
+                const botMessageHtml = `
+                    <div class="message bot">
+                        <div class="message-bubble">
+                            ${botReply}
+                        </div>
+                        <div class="message-time">Today, ${getCurrentTime()}</div>
+                    </div>
+                `;
+                messagesArea.insertAdjacentHTML('beforeend', botMessageHtml);
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+
+            } catch (error) {
+                // Remove typing indicator
+                const typingIndicator = document.getElementById(typingIndicatorId);
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+
+                const errorHtml = `
+                    <div class="message bot">
+                        <div class="message-bubble" style="color: var(--accent-color);">
+                            Network error: ${error.message}
+                        </div>
+                        <div class="message-time">Today, ${getCurrentTime()}</div>
+                    </div>
+                `;
+                messagesArea.insertAdjacentHTML('beforeend', errorHtml);
+                messagesArea.scrollTop = messagesArea.scrollHeight;
+            }
+        }
+
+        function suggestTopic(topic) {
+            document.getElementById("userInput").value = `I need help with ${topic}`;
+            sendMessage();
+        }
+
+        function generateBotResponse(userInput) {
+            // Simple response generator (replace with actual API call)
+            const responses = [
+                "I understand you need legal assistance. Let me help you with that. Could you provide more specific details about your situation?",
+                "Thank you for your question. Based on what you've described, here are some key points to consider...",
+                "This is an important legal matter. I recommend we break this down step by step to ensure we address all aspects properly.",
+                "I'm here to help with your legal concerns. Let me provide you with some guidance based on the information you've shared."
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            return `${hours}:${minutes} ${ampm}`;
+        }
+
+        // Tab switching functionality
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                if (!this.onclick) {
+                    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for messages
+        const messagesArea = document.getElementById('messagesArea');
+        messagesArea.addEventListener('scroll', function() {
+            // Optional: Add scroll indicators or lazy loading here
+        });
+
+        // Auto-resize input on mobile
+        const userInput = document.getElementById('userInput');
+        userInput.addEventListener('input', function() {
+            // Optional: Auto-resize input height for longer messages
+        });
+    </script>
+</body>
+</html>

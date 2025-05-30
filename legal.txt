@@ -1,0 +1,12 @@
+
+
+This Confidentiality Agreement ("Agreement") is made and entered into as of this day by and between ABC Corporation, a company duly registered under the laws of [Jurisdiction], with its principal place of business at [Address] ("Disclosing Party"), and XYZ Solutions, a company registered under the laws of [Jurisdiction], with its principal office at [Address] ("Receiving Party"). For the purposes of this Agreement, "Confidential Information" shall mean any non-public, proprietary, or sensitive information disclosed by the Disclosing Party to the Receiving Party, whether in written, electronic, oral, or other tangible form, including but not limited to trade secrets, business strategies, financial data, technical processes, and client information. The Receiving Party agrees to maintain strict confidentiality of the Confidential Information and shall not disclose, distribute, or use such information for any purpose other than as expressly authorized by the Disclosing Party. The Receiving Party shall take all reasonable precautions to prevent unauthorized disclosure and shall ensure that its employees, agents, and contractors adhere to the same confidentiality obligations. This Agreement shall not apply to information that (i) is or becomes publicly available without breach of this Agreement; (ii) is received lawfully from a third party without confidentiality obligations; (iii) is independently developed by the Receiving Party without reliance on the Confidential Information. This Agreement shall remain in effect for a period of [X] years from the Effective Date unless terminated earlier by mutual written agreement. Upon termination, the Receiving Party shall return or destroy all Confidential Information and certify compliance in writing. This Agreement shall be governed by and construed in accordance with the laws of [Jurisdiction]. Any disputes arising under this Agreement shall be resolved through mediation, failing which, it shall be settled in the competent courts of [Jurisdiction]. IN WITNESS WHEREOF, the parties hereto have executed this Agreement as of the Effective Date.
+
+---
+
+### Key Adjustments:
+1. **Numbering Removed**: The numbered points (e.g., "1.", "2.") have been removed.
+2. **Paragraph Format**: All sentences are combined into a single continuous paragraph, separated by periods and spaces.
+3. **Capitalization Adjusted**: Sentences are capitalized appropriately to ensure readability and consistency.
+
+Let me know if you need further adjustments!
