@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from pymongo import MongoClient
 
 app = Flask(__name__)
-app.secret_key = 'Azsdxcfgvbhnjkml,wsdfghjkl'
+app.secret_key = ''
 
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
