@@ -30,4 +30,5 @@ This makes legal help accessible, multilingual, and available 24/7 using AI. It�
 
 Demo video:
 https://www.youtube.com/watch?v=gntHSsjw428
-> “Justice for all, in every language, anytime.”
+
+See the updated one in [https://github.com/leksialevin7700/all-india-developers-hackathon]
